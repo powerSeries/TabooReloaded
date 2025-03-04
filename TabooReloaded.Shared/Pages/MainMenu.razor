@@ -1,7 +1,50 @@
 ﻿@page "/mainmenu"
 
-<h3>MainMenu</h3>
+@inject NavigationManager Navigation
+
+<PageTitle>Main Menu</PageTitle>
+
+<div class="d-flex flex-column">
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary" @onclick="NavigateToTeamMenu">
+                Start Game
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary" @onclick="NavigateToSettings">
+                Setting
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary" @onclick="NavigateToExit">
+                Exit
+            </button>
+        </div>
+    </div>
+
+</div>
 
 @code {
+
+    private void NavigateToTeamMenu()
+    {
+        Navigation.NavigateTo("/teammenu");
+    }
+
+    private void NavigateToSettings()
+    {
+        Navigation.NavigateTo("/settings");
+    }
+
+    private void NavigateToExit()
+    {
+        // Gravefully shutdown the app. 
+
+    }
 
 }
