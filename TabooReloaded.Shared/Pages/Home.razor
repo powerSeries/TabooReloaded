@@ -4,9 +4,36 @@
 
 <PageTitle>Home</PageTitle>
 
-<Counter />
+@if (isLoading)
+{
+    <div class="container vh-100 d-flex flex-column justify-content-center">
+        <div class="row">
+            <div class="col text-center fade-in">
+                <h1>Taboo Reloaded 2</h1>
+            </div>
+
+        </div>
+        <div class="row mt-3">
+            <div class="col text-center fade-in">
+                <h2>Electric Boogaloo </h2>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <MainMenu />
+}
 
 @code {
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(Constants.LOADING_TIME);
+        isLoading = false;
+    }
+
     private string factor => FormFactor.GetFormFactor();
     private string platform => FormFactor.GetPlatform();
 }
