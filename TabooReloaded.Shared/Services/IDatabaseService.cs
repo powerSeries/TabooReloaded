@@ -1,4 +1,6 @@
-﻿namespace TabooReloaded.Shared.Services
+﻿using TabooReloaded.Shared.Model;
+
+namespace TabooReloaded.Shared.Services
 {
     public interface IDatabaseService
     {
@@ -6,7 +8,7 @@
 
         Task<bool> DisconnectAsync();
 
-        Task GetTabooWordAsync();
+        Task<TabooWordModel> GetTabooWordAsync();
 
         Task GetTabooWordListAsync(int n);
     }

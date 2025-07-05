@@ -1,0 +1,20 @@
+﻿@inject NavigationManager Navigation
+
+<div class="row">
+    <div class="col">
+        <button class="menu-btn" style="width: 50px; height: 50px"
+        @onclick="BackToMainMenu">
+            &#8592;
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string PrevPage { get; set; } = string.Empty;
+
+    private void BackToMainMenu()
+    {
+        Navigation.NavigateTo(PrevPage);
+    }
+}

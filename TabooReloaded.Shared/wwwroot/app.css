@@ -64,3 +64,35 @@ fadeIn {
 .fade-in {
     animation: fadeIn 3s ease-in-out;
 }
+
+.menu-btn {
+    width: 200px;
+    height: 75px;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+    margin: 10px 0px 10px 0px;
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+
+.input-text-field {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    margin: 10px 0px 10px 0px;
+    font-size: 1.2rem;
+}
+
+.large-header {
+    font-size: 4rem;
+}
+
+.rounded-border {
+    border-radius: 4rem;
+    border-color: black;
+    border-width: 10px;
+    border-style: solid;
+    margin-left: 40px;
+    margin-right: 40px;
+}

@@ -1,0 +1,71 @@
+﻿@page "/scorescreen"
+
+@using TabooReloaded.Shared.Services
+@using TabooReloaded.Shared.Model.Event
+@using TabooReloaded.Shared.Pages.Components
+@inject IGameInterface GameInterface;
+
+@inject NavigationManager Navigation
+
+
+<PageTitle>Score Screen</PageTitle>
+
+<div class="container vh-100 d-flex flex-column">
+
+    <BackButton PrevPage="@Constants.TeamMenuUrl" />
+
+    <!-- Score -->
+    <div class="row justify-content-center">
+        <!--Team 1 Score-->
+        <div class="col text-end">
+            <h1 class="large-header">@GameInterface.Team1?.Score</h1>
+        </div>
+
+        <!-- Center -->
+        <div class="col text-center">
+            <h2 class="large-header">VS</h2>
+        </div>
+        <!--Team 2 Score-->
+        <div class="col text-start">
+            <h1 class="large-header">@GameInterface.Team2?.Score</h1>
+        </div>
+    </div>
+
+    <!--History Component-->
+    <WordHistory PastWords="@GameInterface.HistoricalWords" />
+
+    <!--Start Game -->
+    <div class="row justify-content-center">
+        <div class="col text-center">
+            <button class="btn menu-btn" @onclick="StartGame">
+                Start Game
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        Navigation.LocationChanged += OnLocationChanged;
+    }
+
+    private void StartGame()
+    {
+        Navigation.NavigateTo(Constants.GameScreenUrl);
+    }
+
+    private void OnLocationChanged(object sender, LocationChangedEventArgs e)
+    {
+        // Handle location changes if needed
+        // This can be used to update the UI or perform actions based on navigation
+        Console.WriteLine($"Location changed to: {e.Location}");
+    }
+
+    public void Dispose()
+    {
+        // Unsubscribe from the event to prevent memory leaks
+        Navigation.LocationChanged -= OnLocationChanged;
+    }
+}

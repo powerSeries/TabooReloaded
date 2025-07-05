@@ -1,0 +1,16 @@
+﻿@using TabooReloaded.Shared.Model
+
+<div class="row">
+    <ul>
+        @foreach (var word in PastWords)
+        {
+            <li>@word.Word</li>
+        }
+    </ul>
+</div>
+
+
+@code {
+    [Parameter]
+    public List<TabooWordModel> PastWords { get; set; }
+}

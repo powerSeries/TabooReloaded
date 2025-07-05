@@ -4,6 +4,7 @@ using TabooReloaded.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using System.Reflection;
+using Google.Apis.Auth.OAuth2;
 
 namespace TabooReloaded;
 
@@ -15,7 +16,8 @@ public static class MauiProgram
         var temp = typeof(App).GetTypeInfo().Assembly;
 
         IConfigurationRoot config = new ConfigurationBuilder()
-            .AddJsonFile(new EmbeddedFileProvider(temp),"appsettings.json", optional: false, reloadOnChange: true)
+            .SetBasePath(FileSystem.AppDataDirectory)
+            .AddJsonFile(new EmbeddedFileProvider(temp), "appsettings.json", optional: false, reloadOnChange: true)
             .Build();
 
         builder.Configuration.AddConfiguration(config);
@@ -28,7 +30,8 @@ public static class MauiProgram
 
         // Add device-specific services used by the TabooReloaded.Shared project
         builder.Services.AddSingleton<IFormFactor, FormFactor>();
-        builder.Services.AddSingleton<IDatabaseService, MongoService>();
+        builder.Services.AddSingleton<IDatabaseService, DatabaseService>();
+        builder.Services.AddSingleton<IGameInterface, GameService>();
 
         builder.Services.AddMauiBlazorWebView();
 

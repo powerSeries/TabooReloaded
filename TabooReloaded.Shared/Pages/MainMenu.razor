@@ -2,49 +2,49 @@
 
 @inject NavigationManager Navigation
 
+
+
 <PageTitle>Main Menu</PageTitle>
 
-<div class="d-flex flex-column">
-    <div class="row">
-        <div class="col">
-            <button class="btn btn-primary" @onclick="NavigateToTeamMenu">
+<div class="d-flex flex-column justify-content-center align-items-center container vh-100">
+    <div class="row justify-content-center">
+        <div class="col text-center">
+            <button class="btn menu-btn" @onclick="NavigateToTeamMenu">
                 Start Game
             </button>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <button class="btn btn-primary" @onclick="NavigateToSettings">
+    <div class="row justify-content-center">
+        <div class="col text-center">
+            <button class="btn menu-btn" @onclick="NavigateToSettings">
                 Setting
             </button>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <button class="btn btn-primary" @onclick="NavigateToExit">
+    <div class="row justify-content-center">
+        <div class="col text-center">
+            <button class="btn menu-btn" @onclick="NavigateToExit">
                 Exit
             </button>
         </div>
     </div>
-
 </div>
 
 @code {
 
     private void NavigateToTeamMenu()
     {
-        Navigation.NavigateTo("/teammenu");
+        Navigation.NavigateTo(Constants.TeamMenuUrl);
     }
 
     private void NavigateToSettings()
     {
-        Navigation.NavigateTo("/settings");
+        Navigation.NavigateTo(Constants.SettingsUrl);
     }
 
     private void NavigateToExit()
     {
-        // Gravefully shutdown the app. 
-
+        // Gracefully shutdown the app. 
     }
 
 }

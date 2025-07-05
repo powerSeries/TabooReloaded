@@ -1,0 +1,111 @@
+﻿@page "/gamescreen"
+
+@using TabooReloaded.Shared.Services;
+@inject NavigationManager Navigation;
+
+@inject IGameInterface GameInterface;
+
+
+<PageTitle>Game Screen</PageTitle>
+
+<div class="container vh-100 d-flex flex-column">
+
+    <div class="row justify-content-center">
+        <div class="col text-center">
+            <h1 class="large-header" style="font-size: 6rem;">
+                @DisplayTime
+            </h1>
+        </div>
+    </div>
+
+    <div class="row justify-content-center rounded-border m-1"
+    style="height: 500px">
+        <div class="row justify-content-center text-center">
+            <div class="col text-center">
+                <h1>Test</h1>
+            </div>
+        </div>
+    </div>
+
+    <!--Start Game -->
+    <div class="row justify-content-center">
+        <div class="col text-center">
+            <button class="btn menu-btn" @onclick="StartStopTimer">
+                @this.StartStopButtonText
+            </button>
+        </div>
+    </div>
+
+
+</div>
+
+@code {
+    private int TimerDuration = Constants.MATCH_DURATION; // Duration in seconds
+
+
+    private string StartStopButtonText = "Play";
+    private bool IsTimerRunning = false;
+
+    private string DisplayTime => TimeSpan.FromSeconds(TimerDuration).ToString(@"mm\:ss");
+
+
+    private Timer? _timer;
+
+    protected override void OnInitialized()
+    {
+        // Initialize the timer if needed
+        _timer = new Timer(_ => OnTimerTick(), null, Constants.TICK, Constants.TICK);
+    }
+
+    private void OnTimerTick()
+    {
+        if (IsTimerRunning)
+        {
+            // Logic to update the timer display
+            TimerDuration--;
+            InvokeAsync(StateHasChanged);
+
+            if (TimerDuration < 0)
+            {
+                Task.Run(async () =>
+                {
+                    await RoundEndCleanup();
+                });
+                Navigation.NavigateTo(Constants.ScoreScreenUrl, true);
+            }
+        }
+    }
+
+    private async Task RoundEndCleanup()
+    {
+        // Timer has finished
+        UpdateButton("Play", false);
+        _timer?.Change(Timeout.Infinite, Timeout.Infinite);
+    }
+
+    private void StartStopTimer()
+    {
+        if (IsTimerRunning)
+        {
+            UpdateButton("Play", false);
+        }
+        else
+        {
+            UpdateButton("Pause", true);
+        }
+    }
+
+    private void UpdateButton(string text, bool timerState)
+    {
+        IsTimerRunning = timerState;
+        StartStopButtonText = text;
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        _timer?.Dispose();
+        StartStopButtonText = null;
+        IsTimerRunning = false;
+    }   
+}
