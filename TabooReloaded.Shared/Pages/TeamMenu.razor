@@ -1,0 +1,82 @@
+﻿@page "/teammenu"
+@inject NavigationManager Navigation
+
+@using TabooReloaded.Shared.Model
+@using TabooReloaded.Shared.Services
+@using TabooReloaded.Shared.Pages.Components;
+@using TabooReloaded.Shared.Utils;
+@inject IGameInterface GameInterface
+
+<PageTitle>TeamMenu</PageTitle>
+
+<div class="container vh-100 d-flex flex-column">
+    
+    <!-- Back Button -->
+    <BackButton PrevPage="@Constants.MainMenuUrl"/>
+
+    <div class="row">
+        <div class="col">
+            <input type="text"
+            placeholder="Team 1 Name"
+            style="color: grey;"
+            class="form-control"
+            @bind="Player1.TeamName" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <input type="text"
+            placeholder="Team 2 Name"
+            style="color: grey;"
+            class="form-control"
+            @bind="Player2.TeamName" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <input type="text"
+            placeholder="# of Players"
+            style="color: grey;"
+            class="form-control"
+            @bind="numberOfPlayers" />
+        </div>
+        <div class="col">
+            <input type="text"
+            placeholder="# of Rounds"
+            style="color: grey;"
+            class="form-control"
+            @bind="numberOfRounds" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col text-center">
+            <button class="btn menu-btn" @onclick="StartGame">
+                Start Game
+            </button>   
+        </div>
+    </div>
+</div>
+
+@code {
+    private string? team1Name;
+    private string? team2Name;
+    private int? numberOfPlayers = null;
+    private int? numberOfRounds = null;
+
+    public TeamModel? Player1 { get; set; }
+    public TeamModel? Player2 { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        Player1 = new TeamModel();
+        Player2 = new TeamModel();
+
+        return base.OnInitializedAsync();
+    }
+
+    private void StartGame()
+    {
+        GameInterface.SetupGame(Player1, Player2, numberOfPlayers, numberOfRounds);
+        Navigation.NavigateTo(Constants.ScoreScreenUrl);
+    }
+}
